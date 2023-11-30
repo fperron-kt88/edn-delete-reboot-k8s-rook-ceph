@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mypvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ceph-rbd
+  resources:
+    requests:
+      storage: 5Gi
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  - name: busybox-container
+    image: busybox
+    command: ["/bin/sh", "-c", "while true; do sleep 3600; done"]
+    volumeMounts:
+    - name: mypvc
+      mountPath: /data
+  volumes:
+  - name: mypvc
+    persistentVolumeClaim:
+      claimName: mypvc
