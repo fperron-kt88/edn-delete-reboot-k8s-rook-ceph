@@ -16,7 +16,7 @@ while [ "$#" -gt 0 ]; do
 done
 
 if [ "$force" = true ]; then
-    echo "Force option detected. Proceeding with execution..."
+    echo "Force option detected. Proceeding..."
 else
     read -p "Are you certain? Type 'yes-i-am-certain': " response
 fi

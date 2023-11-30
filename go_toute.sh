@@ -16,7 +16,7 @@ while [ "$#" -gt 0 ]; do
 done
 
 if [ "$super_force" = true ]; then
-    echo "SuperForce option detected. Proceeding with execution..."
+    echo "SuperForce option detected. Proceeding..."
 else
     read -p "Are you super certain? Type 'yes-i-am-super-certain': " response
 fi
