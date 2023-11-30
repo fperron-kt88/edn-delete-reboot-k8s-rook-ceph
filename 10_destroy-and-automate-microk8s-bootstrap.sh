@@ -19,11 +19,9 @@ if [ "$force" = true ]; then
     echo "Force option detected. Proceeding with execution..."
 else
     read -p "Are you certain? Type 'yes-i-am-certain': " response
+fi
 
-    if [ "$response" != "yes-i-am-certain" ]; then
-        echo "Skipping execution. Make sure to type 'yes-i-am-certain' to proceed."
-        exit 1
-    else
+if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
         echo ">>> microk8s: reset destroy storage"
 		sudo microk8s reset --destroy-storage
         echo ">>> microk8s: remove and purge config"
@@ -68,6 +66,7 @@ else
 		sudo microk8s kubectl config get-contexts
         echo ">>> use-context"
 		sudo microk8s kubectl config use-context microk8s
-    fi
+else
+    echo "Skipping execution. Make sure to type 'yes-i-am-certain' to proceed or use --force"
+    exit 1
 fi
-

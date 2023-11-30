@@ -2,11 +2,6 @@
 
 force=false
 
-
-
-echo "This script takes for granted that /hdd is already mounted"
-
-
 # Check for --force option
 while [ "$#" -gt 0 ]; do
     case "$1" in
@@ -24,11 +19,9 @@ if [ "$force" = true ]; then
     echo "Force option detected. Proceeding with execution..."
 else
     read -p "Are you certain? Type 'yes-i-am-certain': " response
+fi
 
-    if [ "$response" != "yes-i-am-certain" ]; then
-        echo "Skipping execution. Make sure to type 'yes-i-am-certain' to proceed."
-        exit 1
-    else
+if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
         echo ">>> microceph: install"
         sudo snap install microceph
         echo ">>> microceph: install hold"
@@ -106,10 +99,7 @@ else
 		sudo microk8s kubectl get no
 		echo ">>> microk8s: connect external ceph"
 		sudo microk8s connect-external-ceph
-    fi
+else
+    echo "Skipping execution. Make sure to type 'yes-i-am-certain' to proceed or use --force"
+    exit 1
 fi
-
-
-
-
-

@@ -19,11 +19,9 @@ if [ "$force" = true ]; then
     echo "Force option detected. Proceeding with execution..."
 else
     read -p "Are you certain? Type 'yes-i-am-certain': " response
+fi
 
-    if [ "$response" != "yes-i-am-certain" ]; then
-        echo "Skipping execution. Make sure to type 'yes-i-am-certain' to proceed."
-        exit 1
-    else
+if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
         echo ">>> microceph: reset and purge config"
         sudo snap remove microceph --purge
         echo ">>> microceph: removing /hdd data"
@@ -36,6 +34,7 @@ else
         sudo rm -f /dev/sdia
         sudo rm -f /dev/sdib
         sudo rm -f /dev/sdic
-    fi
+else
+    echo "Skipping execution. Make sure to type 'yes-i-am-certain' to proceed or use --force"
+    exit 1
 fi
-
