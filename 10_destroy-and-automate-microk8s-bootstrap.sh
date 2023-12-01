@@ -39,8 +39,9 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		mkdir -p ~/.kube
         echo ">>> chown"
 		sudo chown -R ${user_name} ~/.kube
-        echo ">>> newgrp"
-		newgrp microk8s
+        echo "TODO: there is a new shell being called here, this breaks the script... >>> newgrp"
+        echo "TODO: we need a better way to access the new group... >>> newgrp"
+#		newgrp microk8s
 
 
         echo ">>> microk8s: starting..."

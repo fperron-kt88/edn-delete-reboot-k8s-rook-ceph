@@ -39,7 +39,7 @@ echo "# cd /data"
 echo "# dd if=/dev/urandom of=/data/random_data_file bs=1M count=5120"
 
     echo ">>> k get po -n default"
-    countdown 15 'sudo microk8s kubectl get po mypod -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
+    countdown 300 'sudo microk8s kubectl get po mypod -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
 
 echo ">>> Contact: k exec -it -n default mypod -- sh"
 sudo microk8s kubectl exec -it -n default mypod -- sh

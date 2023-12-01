@@ -31,7 +31,8 @@ if [ "$response" = "yes-i-am-super-certain" ] || [ "$super_force" = true ]; then
     ./30_provision_microceph_and_link_to_microk8s.sh --force
     echo "+++ 40_provision pod"
     ./40_provision_gros_pod_gourmand.sh --force
-
+    echo "+++ 50_argocd"
+    ./50_install_argocd.sh --force
 else
     echo "Skipping execution. Make sure to type 'yes-i-am-super-certain' to proceed or use --super-force"
     exit 1
