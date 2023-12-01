@@ -20,6 +20,8 @@ echo '>>> TODO: FX fix this!!! WARNING: env KUBECONIFG should probably installed
 # vi ~/.bashrc
 # >export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
 # source ~/.bashrc
+### and made more secure
+# sudo chmod 600 /var/snap/microk8s/current/credentials/client.config
 
 # noter le password password du argocd-server
 admin_initial=$(argocd admin initial-password -n argocd --insecure)
