@@ -88,6 +88,10 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		
 		echo ">>> microceph: set pool size to 2 (might want to try 3...)"
 		sudo microceph.ceph config set global osd_pool_default_size 2
+        #sudo microceph.ceph config set global osd_pool_default_size 3   # Write an object 3 times.
+        echo ">>> microceph: set default min size size to 2 (to accept I/O ops on a PG with 2 copies)"
+        sudo microceph.ceph config set global osd_pool_default_min size 2 # Accept an I/O operation to a PG that has two copies of an object.
+
 		echo ">>> microceph: status --wait-ready"
 		sudo microk8s status --wait-ready
 		echo ">>> microk8s: enable rook-ceph"

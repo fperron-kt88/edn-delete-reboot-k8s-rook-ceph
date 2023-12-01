@@ -32,12 +32,13 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
         echo ">>> microk8s: hold..."
 		sudo snap refresh --hold microk8s
 
-        echo ">>> usermod add group"
-		sudo usermod -a -G microk8s fperron
+        user_name=$(whoami)
+        echo ">>> usermod add group as user ${user_name}"
+		sudo usermod -a -G microk8s ${user_name}
         echo ">>> mkdir"
 		mkdir -p ~/.kube
         echo ">>> chown"
-		sudo chown -R fperron ~/.kube
+		sudo chown -R ${user_name} ~/.kube
         echo ">>> newgrp"
 		newgrp microk8s
 
