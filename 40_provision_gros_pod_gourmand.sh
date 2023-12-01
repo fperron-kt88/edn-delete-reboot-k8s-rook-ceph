@@ -1,5 +1,21 @@
 #!/bin/bash
 
+script_mode=false
+
+# Check for --script-mode option
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --script-mode )
+            script_mode=true
+            shift
+            ;;
+        * )
+            break
+            ;;
+    esac
+done
+
+
 countdown() {
     local seconds=$1
     local task=$2
@@ -32,14 +48,21 @@ countdown() {
 echo ">>> k apply -f gros-pod.yaml"
 sudo microk8s kubectl apply -f gros-pod.yaml
 
+if [ "$script_mode" = true ]; then
+    echo "script mode detected. Proceeding fast and non interactive..."
+    countdown 15 'sudo microk8s kubectl get po mypod -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
+    sudo microk8s kubectl exec -it -n default mypod -- sh -c 'hostname;ps -ef;ls -l;ls -l /data;dd if=/dev/urandom of=/data/random_data_file bs=1M count=5;ls -lh /data; rm /data/random_data_file; ls -lh /data'
 
-echo "... spawning in the pod..."
-echo "... consider typing:"
-echo "# cd /data"
-echo "# dd if=/dev/urandom of=/data/random_data_file bs=1M count=5120"
+else
+    echo "... spawning in the pod..."
+    echo "... consider typing:"
+    echo "# cd /data"
+    echo "# dd if=/dev/urandom of=/data/random_data_file bs=1M count=5120"
 
     echo ">>> k get po -n default"
-    countdown 300 'sudo microk8s kubectl get po mypod -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
+    countdown 15 'sudo microk8s kubectl get po mypod -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
+    echo ">>> Contact: k exec -it -n default mypod -- sh"
+    
+    sudo microk8s kubectl exec -it -n default mypod -- sh
+fi
 
-echo ">>> Contact: k exec -it -n default mypod -- sh"
-sudo microk8s kubectl exec -it -n default mypod -- sh

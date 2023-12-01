@@ -47,6 +47,7 @@ echo '# le port forward se fait automagiquement dans le repo jupyter hub... SINO
 echo '#k port-forward -n kube-system svc/kubernetes-dashboard 9997:443'
 
 
-
-
+echo ">>> INFO: this could be handy..."
+echo "# argocd admin initial-password -n argocd --insecure"
+echo "# ${argocd_admin_pw}"
 

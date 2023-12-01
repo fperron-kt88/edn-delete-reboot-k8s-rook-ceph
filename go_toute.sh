@@ -30,7 +30,7 @@ if [ "$response" = "yes-i-am-super-certain" ] || [ "$super_force" = true ]; then
     echo "+++ 30_provision microceph and microk8s"
     ./30_provision_microceph_and_link_to_microk8s.sh --force
     echo "+++ 40_provision pod"
-    ./40_provision_gros_pod_gourmand.sh --force
+    ./40_provision_gros_pod_gourmand.sh --script-mode # remove interactivity, change the delay...
     echo "+++ 50_argocd"
     ./50_install_argocd.sh --force
 else
