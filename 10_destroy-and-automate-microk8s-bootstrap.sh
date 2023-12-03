@@ -68,6 +68,9 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		sudo microk8s kubectl config get-contexts
         echo ">>> use-context"
 		sudo microk8s kubectl config use-context microk8s
+
+        echo "TODO: tester ça >>> kustomize"
+        sudo snap install kustomize
 else
     echo "Skipping execution. Make sure to type 'yes-i-am-certain' to proceed or use --force"
     exit 1
