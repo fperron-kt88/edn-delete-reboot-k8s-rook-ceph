@@ -33,6 +33,8 @@ if [ "$response" = "yes-i-am-super-certain" ] || [ "$super_force" = true ]; then
     ./40_provision_gros_pod_gourmand.sh --script-mode # remove interactivity, change the delay...
     echo "+++ 50_argocd"
     ./50_install_argocd.sh --force
+    echo "+++ 60_ceph dashboard"
+    ./60_enable_ceph_dashbord.sh --force
 else
     echo "Skipping execution. Make sure to type 'yes-i-am-super-certain' to proceed or use --super-force"
     exit 1

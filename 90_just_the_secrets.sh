@@ -10,3 +10,12 @@ echo '#k port-forward -n kube-system svc/kubernetes-dashboard 9997:443'
 echo ">>> INFO: this could be handy..."
 echo "# argocd admin initial-password -n argocd --insecure"
 argocd admin initial-password -n argocd --insecure
+
+./60_enable_ceph_dashbord.sh --force
+
+
+
+
+
+
+### TODO: ce script pourrait en fait tout regénérer les secrets... ou les prendre d'un gestionnaire de secrets...
