@@ -62,7 +62,7 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		    fi
 		  fi
 		
-		  echo "... Extenting file to size"
+		  echo "... Extending file to size"
 		  sudo truncate -s 10G "${loop_file}"
 		  loop_dev="$(sudo losetup --show -f "${loop_file}")"
 		  # the block-devices plug doesn't allow accessing /dev/loopX

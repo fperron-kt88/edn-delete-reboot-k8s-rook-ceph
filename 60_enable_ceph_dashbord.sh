@@ -47,7 +47,7 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
     echo ">>> Remove the password file" 
     sudo rm /var/snap/microceph/current/conf/password.txt
 
-    echo "Ceph dashboard setup completed. Random password: $random_password"
+    echo "Ceph dashboard setup completed. Random password: ----------(ceph dash)------>>>>>>>> $random_password <<<<<<<<<<<-------------" 
 
 	echo "### pour faire des modifications..."
 	echo "#sudo microceph.ceph dashboard ac-user-show admin"
