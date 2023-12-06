@@ -51,11 +51,11 @@ sudo microk8s kubectl apply -f gros-pod.yaml
 if [ "$script_mode" = true ]; then
     echo "script mode detected. Proceeding fast and non interactive..."
     countdown 15 'sudo microk8s kubectl get po mypod-cephtest -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
-    sudo microk8s kubectl exec -it -n default mypod-cephtest -- sh -c 'hostname;ps -ef;ls -l;ls -l /data;dd if=/dev/urandom of=/data/random_data_file bs=1M count=5;ls -lh /data; rm /data/random_data_file; ls -lh /data'
+    sudo microk8s kubectl exec -it -n default mypod-cephtest -- sh -c 'hostname;ps -ef;ls -l;ls -l /data;dd if=/dev/urandom of=/data/random_data_file bs=1M count=50;ls -lh /data; rm /data/random_data_file; ls -lh /data'
 
 else
     echo "... spawning in the pod..."
-    echo "... consider typing:"
+    echo "... for 5Gi data test, consider typing:"
     echo "# cd /data"
     echo "# dd if=/dev/urandom of=/data/random_data_file bs=1M count=5120"
 
