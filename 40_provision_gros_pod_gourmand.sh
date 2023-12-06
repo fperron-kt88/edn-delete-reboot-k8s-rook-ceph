@@ -63,6 +63,6 @@ else
     countdown 15 'sudo microk8s kubectl get po mypod-cephtest -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
     echo ">>> Contact: k exec -it -n default mypod-cephtest -- sh"
     
-    sudo microk8s kubectl exec -it -n default mypod_cephtest -- sh
+    sudo microk8s kubectl exec -it -n default mypod-cephtest -- sh
 fi
 

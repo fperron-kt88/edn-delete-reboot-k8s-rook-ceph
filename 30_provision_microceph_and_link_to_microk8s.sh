@@ -2,6 +2,9 @@
 
 force=false
 
+OSD_SIZE="300G"
+OSD_POOL_SIZE=3
+
 # Check for --force option
 while [ "$#" -gt 0 ]; do
     case "$1" in
@@ -63,7 +66,7 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		  fi
 		
 		  echo "... Extending file to size"
-		  sudo truncate -s 10G "${loop_file}"
+		  sudo truncate -s ${OSD_SIZE} "${loop_file}"
 		  loop_dev="$(sudo losetup --show -f "${loop_file}")"
 		  # the block-devices plug doesn't allow accessing /dev/loopX
 		  # devices so we make those same devices available under alternate
@@ -86,11 +89,12 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		echo ">>> microceph: osd stat"
 		sudo ceph osd stat
 		
-		echo ">>> microceph: set pool size to 2 (might want to try 3...)"
-		sudo microceph.ceph config set global osd_pool_default_size 2
-        #sudo microceph.ceph config set global osd_pool_default_size 3   # Write an object 3 times.
+		echo ">>> microceph: set pool size to ${OSD_POOL_SIZE} (write an objet ${OSD_POOL_SIZE} times)"
+		sudo microceph.ceph config set global osd_pool_default_size ${OSD_POOL_SIZE}
+        
+        # Accept an I/O operation to a PG that has two copies of an object.
         echo ">>> microceph: set default min size size to 2 (to accept I/O ops on a PG with 2 copies)"
-        sudo microceph.ceph config set global osd_pool_default_min size 2 # Accept an I/O operation to a PG that has two copies of an object.
+        sudo microceph.ceph config set global osd_pool_default_min size 2 
 
 		echo ">>> microceph: status --wait-ready"
 		sudo microk8s status --wait-ready
