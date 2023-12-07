@@ -35,7 +35,14 @@ if [ "$response" = "yes-i-am-super-certain" ] || [ "$super_force" = true ]; then
     ./50_install_argocd.sh --force
     echo "+++ 60_ceph dashboard"
     ./60_enable_ceph_dashbord.sh --force
+    echo "+++ 70_enable_observability.sh"
+    ./70_enable_observability.sh
 else
     echo "Skipping execution. Make sure to type 'yes-i-am-super-certain' to proceed or use --super-force"
     exit 1
 fi
+
+
+
+
+
