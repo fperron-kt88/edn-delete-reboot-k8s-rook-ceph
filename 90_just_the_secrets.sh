@@ -11,7 +11,7 @@ echo ">>> INFO: this could be handy..."
 echo "# argocd admin initial-password -n argocd --insecure"
 argocd admin initial-password -n argocd --insecure | perl -pe 's/^(?!\s)(.*)/-------(argocd dash)--->>>>>>> $1 <<<<<<<---------------/'
 
-./60_enable_ceph_dashbord.sh --force
+./60_enable_ceph_dashbord.sh --roll-password --force
 
 
 
