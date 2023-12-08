@@ -18,10 +18,21 @@ roll_password_function() {
     echo ">>> Create the dashboard user"
     sudo microceph.ceph dashboard ac-user-create -i /var/snap/microceph/current/conf/password.txt admin administrator
 
-    echo ">>> Remove the password file"
-    sudo rm /var/snap/microceph/current/conf/password.txt
+	# Check the exit code of the last command
+    if [ $? -eq 0 ]; then
+    	echo ">>> Remove the password file"
+    	sudo rm /var/snap/microceph/current/conf/password.txt
 
-    echo "Ceph admin password setup completed. Random password: ----------(ceph dash)------>>>>>>>> $random_password <<<<<<<<<<<-------------"
+    	echo "Ceph admin password setup completed. Random password: ----------(ceph dash)------>>>>>>>> $random_password <<<<<<<<<<<-------------"
+        return 0  # Success
+    else
+    	echo ">>> Remove the password file"
+    	sudo rm /var/snap/microceph/current/conf/password.txt
+
+        echo "Error: User creation failed to execute. No password set..."
+        exit 1
+    fi
+
 }
 
 # Check for options

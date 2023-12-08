@@ -22,10 +22,6 @@ else
 fi
 
 if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
-        echo ">>> microk8s: reset destroy storage"
-		sudo microk8s reset --destroy-storage
-        echo ">>> microk8s: remove and purge config"
-		sudo snap remove microk8s --purge
 
         echo ">>> microk8s: install..."
 		sudo snap install microk8s --classic --channel=1.28/stable

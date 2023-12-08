@@ -22,27 +22,25 @@ else
 fi
 
 if [ "$response" = "yes-i-am-super-certain" ] || [ "$super_force" = true ]; then
+    # Define a here document to store the list of commands
+    commands_list=$(cat <<EOF
+./10_destroy_wipe_microk8s_microceph.sh --force
+./20_microk8s_bootstrap.sh --force
+./30_microceph_bootstrap_provision_and_link_to_microk8s.sh --force
+./40_provision_gros_pod_gourmand.sh --script-mode
+./50_install_argocd.sh
+./60_enable_ceph_dashbord.sh --force
+./70_enable_observability.sh --force
+EOF
+)
 
-    echo "+++ 10_destroy"
-    ./10_destroy-and-automate-microk8s-bootstrap.sh --force
-    echo "+++ 20_clean_hdd"
-    ./20_clean_hdd_data_wipe_all.sh --force
-    echo "+++ 30_provision microceph and microk8s"
-    ./30_provision_microceph_and_link_to_microk8s.sh --force
-    echo "+++ 40_provision pod"
-    ./40_provision_gros_pod_gourmand.sh --script-mode # remove interactivity, change the delay...
-    echo "+++ 50_argocd"
-    ./50_install_argocd.sh --force
-    echo "+++ 60_ceph dashboard"
-    ./60_enable_ceph_dashbord.sh --force
-    echo "+++ 70_enable_observability.sh"
-    ./70_enable_observability.sh
+    # Iterate through the commands
+    IFS=$'\n' # Set Internal Field Separator to newline
+    for command in $commands_list; do
+        echo "+++ Script: $command" # Print echo statement with prefix
+        eval "$command"             # Execute the command
+    done
 else
     echo "Skipping execution. Make sure to type 'yes-i-am-super-certain' to proceed or use --super-force"
     exit 1
 fi
-
-
-
-
-

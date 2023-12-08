@@ -2,7 +2,7 @@
 
 force=false
 
-OSD_SIZE="300G"
+OSD_SIZE="600G"
 OSD_POOL_SIZE=3
 
 # Check for --force option

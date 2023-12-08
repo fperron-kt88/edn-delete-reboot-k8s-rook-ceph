@@ -25,7 +25,19 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
     echo ">>> Enable the observability dashboard module with prometheus and grafana"
     sudo microk8s enable observability
 
-    echo "TODO: this is bad: The password is alwas this:  user/pass: admin/prom-operator"
+    echo "TODO: this is bad: The password is always this:  user/pass: admin/prom-operator"
+	echo
+	echo "Ok got two ways:"
+	echo
+	echo "    you can use the UI ( after login with defaults )"
+	echo "    or use grafana-cli in the container microk8s kubectl exec --stdin --tty kube-prom-stack-grafana-*** sh -n observability"
+	echo
+	echo "Still wondering if there is some way to configure default for this, would be nice for automatic setups."
+
+
+
+
+
 else
     echo "Skipping execution. Make sure to type 'yes-i-am-certain' to proceed or use --force"
     exit 1
