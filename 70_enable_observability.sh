@@ -25,7 +25,7 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
     echo ">>> Enable the observability dashboard module with prometheus and grafana"
     sudo microk8s enable observability
 
-    echo "TODO: this is bad: The password is always this:  user/pass: admin/prom-operator"
+    echo "TODO: this is bad: The password is always this:  grafana user/pass: admin/prom-operator"
 	echo
 	echo "Ok got two ways:"
 	echo

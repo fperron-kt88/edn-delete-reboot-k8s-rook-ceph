@@ -13,8 +13,9 @@ argocd admin initial-password -n argocd --insecure | perl -pe 's/^(?!\s)(.*)/---
 
 ./60_enable_ceph_dashbord.sh --roll-password --force
 
-
-
+echo "grafana"
+perl -ne 'next unless s/(grafana).*(user.*)"/-------($1)---->>>>>>>>>>>>>>>>> $2 <<<<<<<<<<<<<<<<<--------------/; print' ./70_enable_observability.sh
+echo
 
 
 
