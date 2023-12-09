@@ -24,22 +24,22 @@ fi
 if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 
         timeout=5
-		echo "Scale down Ceph OSDs"
+		echo ">>> Scale down Ceph OSDs"
 		timeout ${timeout} sudo microk8s kubectl scale --replicas=0 -n rook-ceph deploy/rook-ceph-osd
-		echo "Monitor OSD pod termination"
+		echo ">>> Monitor OSD pod termination"
 		timeout ${timeout} sudo microk8s kubectl get pods -n rook-ceph
-		echo "Scale down Rook Ceph Operator"
+		echo ">>> Scale down Rook Ceph Operator"
 		timeout ${timeout} sudo microk8s kubectl scale --replicas=0 deploy/rook-ceph-operator -n rook-ceph
-		echo "Monitor Operator pod termination"
+		echo ">>> Monitor Operator pod termination"
 		timeout ${timeout} sudo microk8s kubectl get pods -n rook-ceph
-		echo "Remove Rook Custom Resource Definitions (CRDs)"
+		echo ">>> Remove Rook Custom Resource Definitions (CRDs)"
 		timeout ${timeout} sudo microk8s kubectl get crd -n rook-ceph | grep ceph.rook.io | awk '{print $1}' | xargs -n 1 sudo microk8s kubectl delete crd -n rook-ceph
-		echo "Remove Rook Namespace (Optional)"
+		echo ">>> Remove Rook Namespace (Optional)"
 		timeout ${timeout} sudo microk8s kubectl delete namespace rook-ceph
 
 
-        echo ">>> microk8s: reset destroy storage"
-		sudo microk8s reset --destroy-storage
+#        echo ">>> microk8s: reset destroy storage"             # it turns out that the reset keeps stuff... even with purge in any case: it is way too long...
+#		sudo microk8s reset --destroy-storage
         echo ">>> snap for microk8s: remove and purge config"
 		sudo snap remove microk8s --purge
 

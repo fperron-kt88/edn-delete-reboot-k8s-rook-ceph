@@ -18,7 +18,7 @@ function port_forward() {
 }
 
 # Example usage
-port_forward "fooocus" "dev-interne-testgenerative-edn-fooocus-ns" "dev-interne-testgenerative-edn-fooocus-app-fooocus-app" 9992 7865
+port_forward "fooocus" "dev-interne-testgenerative-edn-fooocus-ns" "dev-interne-testgenerative-edn-fooocus-app-fooocus-app" 9992 80
 port_forward "powermon" "dev-interne-testmonitoring-edn-powermon-ns" "dev-interne-testmonitoring-edn-powermon-app-powermon-app" 9993 6666
 port_forward "infisical" "infisical-ns" "infisical-app-backend" 9994 8080
 port_forward "obs_grafana" "observability" "kube-prom-stack-grafana" 9995 80

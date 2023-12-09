@@ -5,6 +5,14 @@ roll_password=false
 
 # Function to generate and roll the password
 roll_password_function() {
+
+
+
+
+# TODO: cette partie est blocante...
+
+
+
     echo ">>> sudo microceph.ceph dashboard ac-user-delete admin"
     sudo microceph.ceph dashboard ac-user-delete admin
 
