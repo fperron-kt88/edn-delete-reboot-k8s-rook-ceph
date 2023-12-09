@@ -23,6 +23,11 @@ fi
 
 if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 
+        echo ">>> swapoff for k8s in general"
+        sudo perl -i'' -pe 's/^(\/swap)/#-FX-was-here ###$1/' /etc/fstab
+        sudo swapoff -a
+
+
         echo ">>> microk8s: install..."
 		sudo snap install microk8s --classic --channel=1.28/stable
         echo ">>> microk8s: hold..."

@@ -1,3 +1,4 @@
+p
 #!/bin/bash
 
 function port_forward() {
@@ -18,13 +19,13 @@ function port_forward() {
 }
 
 # Example usage
-port_forward "fooocus" "dev-interne-testgenerative-edn-fooocus-ns" "dev-interne-testgenerative-edn-fooocus-app-fooocus-app" 9992 80
-port_forward "powermon" "dev-interne-testmonitoring-edn-powermon-ns" "dev-interne-testmonitoring-edn-powermon-app-powermon-app" 9993 6666
-port_forward "infisical" "infisical-ns" "infisical-app-backend" 9994 8080
-port_forward "obs_grafana" "observability" "kube-prom-stack-grafana" 9995 80
-port_forward "jupyterhub" "test-fx-ns1-jupyterhub-3-0-1" "proxy-public" 9996 80
-port_forward "k8s_dashbd" "kube-system" "kubernetes-dashboard" 9997 443
-port_forward "argocd_ui" "argocd" "argocd-server" 9998 443
+port_forward "jupyterhub" "test-fx-ns1-jupyterhub-3-0-1" "proxy-public" 9992 80
+port_forward "fooocus" "dev-interne-testgenerative-edn-fooocus-ns" "dev-interne-testgenerative-edn-fooocus-app-fooocus-app" 9993 80
+port_forward "powermon" "dev-interne-testmonitoring-edn-powermon-ns" "dev-interne-testmonitoring-edn-powermon-app-powermon-app" 9994 6666
+port_forward "infisical" "infisical-ns" "infisical-app-backend" 9995 8080
+port_forward "obs_grafana" "observability" "kube-prom-stack-grafana" 9996 80
+port_forward "argocd_ui" "argocd" "argocd-server" 9997 443
+port_forward "k8s_dashbd" "kube-system" "kubernetes-dashboard" 9998 443
 
 # Wait for all background jobs to finish
 wait

@@ -23,6 +23,9 @@ fi
 
 if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 
+        echo ">>> disconnect microk8s from microceph"
+        sudo microk8s disconnect-external-ceph
+
         timeout=5
 		echo ">>> Scale down Ceph OSDs"
 		timeout ${timeout} sudo microk8s kubectl scale --replicas=0 -n rook-ceph deploy/rook-ceph-osd
@@ -33,7 +36,7 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		echo ">>> Monitor Operator pod termination"
 		timeout ${timeout} sudo microk8s kubectl get pods -n rook-ceph
 		echo ">>> Remove Rook Custom Resource Definitions (CRDs)"
-		timeout ${timeout} sudo microk8s kubectl get crd -n rook-ceph | grep ceph.rook.io | awk '{print $1}' | xargs -n 1 sudo microk8s kubectl delete crd -n rook-ceph
+		sudo microk8s kubectl get crd -n rook-ceph | grep ceph.rook.io | awk '{print $1}' | timeout ${timeout} xargs -n 1 sudo microk8s kubectl delete crd  --grace-period=0
 		echo ">>> Remove Rook Namespace (Optional)"
 		timeout ${timeout} sudo microk8s kubectl delete namespace rook-ceph
 

@@ -2,8 +2,47 @@
 
 force=false
 
-OSD_SIZE="600G"
+# Set the disk path and intented osd capacity and config
+DISK="/hdd"
+OSD_SIZE="580G"
 OSD_POOL_SIZE=3
+
+# Function to check if disk is mounted
+check_mount() {
+  if ! mountpoint -q "$DISK"; then
+    echo "Error: $DISK is not mounted."
+    echo
+	echo "# Here are the steps you want to perform to mount the disk:"
+	echo "## TODO: automatiser ça..."
+	echo "# lsblk | grep sda"
+	echo "# sudo mkdir /hdd"
+	echo "# lsblk"
+	echo "# parted rm et on en garde que /dec/sda de 1.8 TB"
+	echo "# sudo mkfs.ext4 /dev/sda"
+	echo "# sudo mount /dev/sda /hdd"
+    echo
+	echo "# don't forget to edit /etc/fstab:"
+	echo "#   /dev/sda  /hdd  ext4  defaults  0  2"
+
+    exit 1
+  fi
+}
+
+# Function to check available space
+check_space() {
+  available_space=$(df -BG --output=avail "$DISK" | tail -n 1 | sed 's/G//')
+  required_space=$((OSD_POOL_SIZE * ${OSD_SIZE%"G"}))
+  max_osd_space=$((${available_space} / $OSD_POOL_SIZE))
+
+  if [ "$available_space" -lt "$required_space" ]; then
+    echo "Error: Insufficient space on $DISK. Required: $required_space GB, Available: $available_space GB"
+    echo "Solution: you want an OSD_SIZE no larger than ${max_osd_space} GB in this script ($0)"
+    exit 1
+  fi
+}
+
+
+
 
 # Check for --force option
 while [ "$#" -gt 0 ]; do
@@ -25,6 +64,11 @@ else
 fi
 
 if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
+
+        echo ">>> Requirement checks: /hdd is mounted and sufficient?"
+		check_mount
+		check_space
+
         echo ">>> microceph: install"
         sudo snap install microceph
         echo ">>> microceph: install hold"

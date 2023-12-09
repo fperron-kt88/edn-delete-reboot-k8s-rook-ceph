@@ -1,6 +1,7 @@
 #!/bin/bash
 
 script_mode=false
+max_wait=300
 
 # Check for --script-mode option
 while [ "$#" -gt 0 ]; do
@@ -50,7 +51,7 @@ sudo microk8s kubectl apply -f gros-pod.yaml
 
 if [ "$script_mode" = true ]; then
     echo "script mode detected. Proceeding fast and non interactive..."
-    countdown 15 'sudo microk8s kubectl get po mypod-cephtest -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
+    countdown ${max_wait} 'sudo microk8s kubectl get po mypod-cephtest -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
     sudo microk8s kubectl exec -it -n default mypod-cephtest -- sh -c 'hostname;ps -ef;ls -l;ls -l /data;dd if=/dev/urandom of=/data/random_data_file bs=1M count=50;ls -lh /data; rm /data/random_data_file; ls -lh /data'
 
 else
@@ -60,7 +61,7 @@ else
     echo "# dd if=/dev/urandom of=/data/random_data_file bs=1M count=5120"
 
     echo ">>> k get po -n default"
-    countdown 15 'sudo microk8s kubectl get po mypod-cephtest -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
+    countdown ${max_wait} 'sudo microk8s kubectl get po mypod-cephtest -n default' 'Running' '>>> Pod is ready. Breaking out of the loop.' NAME
     echo ">>> Contact: k exec -it -n default mypod-cephtest -- sh"
     
     sudo microk8s kubectl exec -it -n default mypod-cephtest -- sh

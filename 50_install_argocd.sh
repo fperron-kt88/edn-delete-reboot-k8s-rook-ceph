@@ -10,13 +10,13 @@ sudo apt-get install build-essential
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 export NONINTERACTIVE=1
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-echo '>>> TODO: FX fix this!!! WARNING: env KUBECONIFG should probably installed with ansible in the .bashrc'
+echo '>>> TODO: FX fix this!!! WARNING: env KUBECONIFG should probably be installed with ansible in the .bashrc'
 echo ">>> Add this: eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\""
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 brew install gcc
 brew install argocd
 
-echo '>>> TODO: FX fix this!!! WARNING: env KUBECONIFG should probably installed with ansible in the .bashrc'
+echo '>>> TODO: FX fix this!!! WARNING: env KUBECONIFG should probably be installed with ansible in the .bashrc'
 # vi ~/.bashrc
 # >export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
 # source ~/.bashrc
@@ -24,14 +24,17 @@ echo '>>> TODO: FX fix this!!! WARNING: env KUBECONIFG should probably installed
 # sudo chmod 600 /var/snap/microk8s/current/credentials/client.config
 
 # noter le password password du argocd-server
+echo '>>> argocd gathering password setup'
 admin_initial=$(argocd admin initial-password -n argocd --insecure)
 echo $admin_initial | perl -pe 's/^.*?\s+/**** (hidden) ***** /g'
 argocd_admin_pw=$(echo $admin_initial | awk '{print $1}')
 
 # noter le cluster ip du argocd-server
+echo '>>> argocd gathering server ip'
 cluster_ip=$(sudo microk8s kubectl get svc -n argocd | perl -ne 'next unless /argocd-server\s/;s/.*argocd-server\s.*?ClusterIP\s+(\d+\.\d+\.\d+\.\d+)\s.*/$1/gm;print')
 
 # faire le login du cli
+echo '>>> argocd login'
 argocd login ${cluster_ip} --username admin --password ${argocd_admin_pw} --insecure
 
 echo '>>> enabling webssh for pods in gui'
