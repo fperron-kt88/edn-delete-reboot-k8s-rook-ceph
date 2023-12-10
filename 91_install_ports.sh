@@ -20,7 +20,8 @@ function port_forward() {
 
 # Example usage
 port_forward "jupyterhub" "test-fx-ns1-jupyterhub-3-0-1" "proxy-public" 9992 80
-port_forward "fooocus" "dev-interne-testgenerative-edn-fooocus-ns" "dev-interne-testgenerative-edn-fooocus-app-fooocus-app" 9993 80
+#port_forward "fooocus" "default" "fooocus-service" 9993 80
+port_forward "fooocus" "dev-interne-genai-edn-fooocus-ns" "dev-interne-genai-edn-fooocus-app-fooocus-app" 9993 6667
 port_forward "powermon" "dev-interne-testmonitoring-edn-powermon-ns" "dev-interne-testmonitoring-edn-powermon-app-powermon-app" 9994 6666
 port_forward "infisical" "infisical-ns" "infisical-app-backend" 9995 8080
 port_forward "obs_grafana" "observability" "kube-prom-stack-grafana" 9996 80

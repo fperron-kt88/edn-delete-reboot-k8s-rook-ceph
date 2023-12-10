@@ -51,6 +51,10 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		sudo microk8s status
 		#sudo microk8s inspect # si problème pour avoir un tar.gz
 
+
+        echo ">>> microk8s: enabling gpu"
+        sudo microk8s enable gpu
+
         echo ">>> microk8s: final config, cluster info and contexts..."
 		# sur serveur primaire
 		sudo microk8s config > ~/.kube/config
