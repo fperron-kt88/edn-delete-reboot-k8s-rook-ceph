@@ -1,4 +1,3 @@
-p
 #!/bin/bash
 
 function port_forward() {
@@ -19,8 +18,8 @@ function port_forward() {
 }
 
 # Example usage
-port_forward "jupyterhub" "test-fx-ns1-jupyterhub-3-0-1" "proxy-public" 9992 80
-#port_forward "fooocus" "default" "fooocus-service" 9993 80
+port_forward "jupyterhub" "test-fx-ns1-jupyterhub-3-0-1" "proxy-public" 9991 80
+port_forward "mistral_chatbot" "dev-interne-genai-edn-generation-webui-ns" "text-generation-webui-service" 9992 80
 port_forward "fooocus" "dev-interne-genai-edn-fooocus-ns" "dev-interne-genai-edn-fooocus-app-fooocus-app" 9993 6667
 port_forward "powermon" "dev-interne-testmonitoring-edn-powermon-ns" "dev-interne-testmonitoring-edn-powermon-app-powermon-app" 9994 6666
 port_forward "infisical" "infisical-ns" "infisical-app-backend" 9995 8080
