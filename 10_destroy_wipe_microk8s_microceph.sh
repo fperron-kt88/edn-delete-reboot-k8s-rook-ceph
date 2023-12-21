@@ -41,6 +41,12 @@ if [ "$response" = "yes-i-am-certain" ] || [ "$force" = true ]; then
 		timeout ${timeout} sudo microk8s kubectl delete namespace rook-ceph
 
 
+        echo ">>> Leaving some time before a more drastic crd wipe..."
+        sleep 5
+        echo ">>> ... killing the remaining delete processes"
+        ps aux | grep ceph | grep kubectl | grep delete | grep crd | grep grace-period | grep cephcluster | awk '{print $2}' | xargs sudo kill -9
+
+
 #        echo ">>> microk8s: reset destroy storage"             # it turns out that the reset keeps stuff... even with purge in any case: it is way too long...
 #		sudo microk8s reset --destroy-storage
         echo ">>> snap for microk8s: remove and purge config"

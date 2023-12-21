@@ -1,10 +1,34 @@
 #!/bin/bash
 
+### Ce script laisse probablement argocd mal logu/ sur le CLI... il faut faire le login manuellement...
 
-sudo microk8s kubectl create namespace argocd
+tag="v2.9.3"  # Replace with the specific tag you want
+echo ">>> Checking if tag ${tag} exixsts for argocd"
+release_info=$(curl -s "https://api.github.com/repos/argoproj/argo-cd/releases/tags/$tag")
+latest_tag=$(echo "$release_info" | grep '"tag_name":' | cut -d'"' -f4)
 
-echo '>>> TODO: FX fix this!!! WARNING: no revision selected FLOATING REVISION <<<'
-sudo microk8s kubectl  apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+if [ "$latest_tag" == "$tag" ]; then
+    echo "Release information for tag $tag:"
+#    echo "$release_info" This is a mess __TODO__ Fix this by using gh + auth or some other means...
+else
+    echo "!!!!!!!! Error: The specified tag $tag does not exist."
+	exit 1
+fi
+
+echo ">>> Checking for a newer tag than ${tag}"
+fixed_tag=$tag
+latest_tag=$(curl -s "https://api.github.com/repos/argoproj/argo-cd/releases/latest" | grep '"tag_name":' | cut -d'"' -f4)
+
+if [ "$fixed_tag" != "$latest_tag" ]; then
+        echo ">>> WARNING: A newer tag ($latest_tag) is available. Consider upgrading."
+fi
+argo_cd_url="https://raw.githubusercontent.com/argoproj/argo-cd/${fixed_tag}/manifests/install.yaml"
+
+echo ">>> Create namespace"
+sudo microk8s kubectl create namespace argocd --dry-run=client -o yaml | sudo microk8s kubectl apply -f -
+echo ">>> Install from manifest ${fixed_tag}"
+sudo microk8s kubectl  apply -n argocd -f ${argo_cd_url}
+echo '>>> Install build-essential <<<'
 sudo apt-get install build-essential
 
 export HOMEBREW_NO_INSTALL_CLEANUP=1
@@ -52,5 +76,5 @@ echo '#k port-forward -n kube-system svc/kubernetes-dashboard 9997:443'
 
 echo ">>> INFO: this could be handy..."
 echo "# argocd admin initial-password -n argocd --insecure"
-echo "# ${argocd_admin_pw}"
+echo "# ------------ ${cluster_ip} ------------- ${argocd_admin_pw} ------------"
 

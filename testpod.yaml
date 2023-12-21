@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: inspect-pod
+spec:
+  containers:
+  - name: inspector
+    image: busybox:latest
+    command: ["/bin/sh", "-c"]
+    args: ["sleep 30; mount && df .gv0 || exit 1; while true; do sleep 2; if grep 'pv.mount-state=bound' /proc/fs/kproxy/mounts; then echo 'PVC mounted'; else echo 'Waiting for PVC to be bound...'; fi; done"]
+    volumeMounts:
+    - name: pvc-468a8cd5-8c73-4d4b-a3bb-74e6f49b9ffe
+      mountPath: /mnt/data_dir
+  volumes:
+  - name: pvc-468a8cd5-8c73-4d4b-a3bb-74e6f49b9ffe
+    persistentVolumeClaim:
+      claimName: your-claim-name

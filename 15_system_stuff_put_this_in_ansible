@@ -18,6 +18,9 @@ done
 
 sudo timedatectl set-timezone America/New_York
 
+# __TODO__ clarify fzf: we also have it in vim through plug installer
+# __TODO__ clarify fzf: additional lines are required in ~/.bashrc to activate the Ctrl-R Ctrl-T and Alt-C key bindings. **<TAB> cmopletion still does not work
+sudo apt-get install fzf
 
 #if [ "$force" = true ]; then
 #    echo "Force option detected. Proceeding..."
