@@ -1,6 +1,6 @@
 #!/bin/bash
 
-### Ce script laisse probablement argocd mal logu/ sur le CLI... il faut faire le login manuellement...
+### Ce script laisse probablement argocd mal logué sur le CLI... il faut faire le login manuellement...
 
 tag="v2.9.3"  # Replace with the specific tag you want
 echo ">>> Checking if tag ${tag} exists for argocd"
