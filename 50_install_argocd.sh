@@ -3,7 +3,7 @@
 ### Ce script laisse probablement argocd mal logu/ sur le CLI... il faut faire le login manuellement...
 
 tag="v2.9.3"  # Replace with the specific tag you want
-echo ">>> Checking if tag ${tag} exixsts for argocd"
+echo ">>> Checking if tag ${tag} exists for argocd"
 release_info=$(curl -s "https://api.github.com/repos/argoproj/argo-cd/releases/tags/$tag")
 latest_tag=$(echo "$release_info" | grep '"tag_name":' | cut -d'"' -f4)
 
